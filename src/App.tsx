@@ -1,9 +1,9 @@
-import { FC } from 'react';
-import './scss/app.scss';
-import Header from './components/Header';
-import Categories from './components/Categories';
-import Sort from './components/Sort';
-import PizzaBlock from './components/PIzzaBlock';
+import { FC } from 'react'
+import './scss/app.scss'
+import Header from './components/Header'
+import Categories from './components/Categories'
+import Sort from './components/Sort'
+import PizzaBlock from './components/PizzaBlock'
 
 const App: FC = () => {
   return (
@@ -25,7 +25,7 @@ const App: FC = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App
