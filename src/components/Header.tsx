@@ -8,8 +8,8 @@ const Header: FC = () => {
         <div className="header__logo">
           <img width="38" src={pizzaLogo} alt="Pizza logo" />
           <div>
-            <h1>Frenzy Pizza</h1>
-            <p>самая вкусная пицца во вселенной</p>
+            <h1>Cosmo Pizza</h1>
+            <p>самая вкусная пицца в галактике</p>
           </div>
         </div>
         <div className="header__cart">
