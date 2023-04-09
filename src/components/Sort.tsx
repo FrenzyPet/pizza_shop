@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC } from 'react'
 
 const Sort: FC = () => {
   return (
@@ -21,7 +21,7 @@ const Sort: FC = () => {
         </ul>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Sort;
+export default Sort

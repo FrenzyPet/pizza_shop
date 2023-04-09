@@ -1,9 +1,10 @@
 import { FC } from 'react'
 import './scss/app.scss'
-import Header from './components/Header'
+import pizzas from './assets/img/pizzaList.json'
 import Categories from './components/Categories'
-import Sort from './components/Sort'
+import Header from './components/Header'
 import PizzaBlock from './components/PizzaBlock'
+import Sort from './components/Sort'
 
 const App: FC = () => {
   return (
@@ -17,10 +18,9 @@ const App: FC = () => {
           </div>
           <h2 className="content__title">Все пиццы</h2>
           <div className="content__items">
-            <PizzaBlock title="Мексиканская" price={350} />
-            <PizzaBlock title="Маргарита" price={350} />
-            <PizzaBlock title="Пепперони" price={350} />
-            <PizzaBlock title="Барбекю" price={350} />
+            {pizzas.map(item => (
+              <PizzaBlock key={item.id} {...item} />
+            ))}
           </div>
         </div>
       </div>
