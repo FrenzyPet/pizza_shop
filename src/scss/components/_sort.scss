@@ -2,6 +2,8 @@
 
 .sort {
   position: relative;
+  margin-left: 20px;
+  min-width: 255px;
   &__label {
     display: flex;
     align-items: center;
@@ -14,10 +16,11 @@
       margin-right: 8px;
     }
 
-    span {
+    div {
       color: $orange;
       border-bottom: 1px dashed $orange;
       cursor: pointer;
+      padding: 5px 0;
     }
   }
 

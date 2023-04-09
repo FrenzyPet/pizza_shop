@@ -1,6 +1,29 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
+
+type SortingType = 'популярности' | 'цене' | 'алфавиту'
 
 const Sort: FC = () => {
+  const sortFilters: Array<SortingType> = ['популярности', 'цене', 'алфавиту']
+  const [isPopup, setIsPopup] = useState(false)
+  const [activeSort, setActiveSort] = useState<SortingType>('популярности')
+
+  const onSortClick = (sortType: SortingType) => {
+    setActiveSort(sortType)
+    setIsPopup(false)
+  }
+
+  useEffect(() => {
+    const closePopup = () => {
+      setIsPopup(false)
+    }
+
+    document.addEventListener('click', closePopup)
+
+    return () => {
+      document.removeEventListener('click', closePopup)
+    }
+  }, [setIsPopup])
+
   return (
     <div className="sort">
       <div className="sort__label">
@@ -11,15 +34,26 @@ const Sort: FC = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span>популярности</span>
+        <div
+          onClick={evt => {
+            evt.stopPropagation()
+            setIsPopup(!isPopup)
+          }}
+        >
+          {activeSort}
+        </div>
       </div>
-      <div className="sort__popup">
-        <ul>
-          <li className="active">популярности</li>
-          <li>цене</li>
-          <li>алфавиту</li>
-        </ul>
-      </div>
+      {isPopup && (
+        <div className="sort__popup">
+          <ul>
+            {sortFilters.map((item, index) => (
+              <li key={index} onClick={() => onSortClick(item)} className={activeSort === item ? 'active' : ''}>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   )
 }
