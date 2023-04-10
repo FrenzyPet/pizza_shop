@@ -1,15 +1,22 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { v1 } from 'uuid'
 
-const Categories: FC = () => {
-  const [activeIndex, setActiveIndex] = useState<number>(0)
-  const categories = ['Все', 'Мясные', 'Веганские', 'Гриль', 'Острые', 'Закрытые']
+interface Props {
+  categoryIndex: number
+  setCategoryIndex: (index: number) => void
+}
 
+const Categories: FC<Props> = ({ categoryIndex, setCategoryIndex }) => {
+  const categories = ['Все', 'Мясные', 'Вегетарианские', 'Гриль', 'Острые', 'Закрытые']
   return (
     <div className="categories">
       <ul>
         {categories.map((item, index) => (
-          <li key={v1()} onClick={() => setActiveIndex(index)} className={activeIndex === index ? 'active' : ''}>
+          <li
+            key={v1()}
+            onClick={() => setCategoryIndex(index)}
+            className={categoryIndex === index ? 'active' : ''}
+          >
             {item}
           </li>
         ))}

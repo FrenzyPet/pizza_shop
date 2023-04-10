@@ -25,8 +25,8 @@ body {
   &__items {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 40px;
+    justify-content: flex-start;
+    gap: 20px;
   }
 
   &__top {
