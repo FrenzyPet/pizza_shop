@@ -23,6 +23,7 @@ const Home: FC = () => {
 
   useEffect(() => {
     getPizza()
+    window.scrollTo(0, 0)
   }, [])
 
   return (
