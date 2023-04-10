@@ -1,12 +1,23 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import './scss/app.scss'
-import pizzas from './assets/img/pizzaList.json'
 import Categories from './components/Categories'
 import Header from './components/Header'
 import PizzaBlock from './components/PizzaBlock'
+import { Pizza } from './components/PizzaBlock'
 import Sort from './components/Sort'
 
 const App: FC = () => {
+  const [items, setItems] = useState<Array<Pizza>>([])
+
+  const getPizza = () => {
+    fetch('https://643347c6582420e2316206a7.mockapi.io/cosmopizza/api/items')
+      .then(response => response.json())
+      .then(data => setItems(data))
+  }
+
+  useEffect(() => {
+    getPizza()
+  }, [])
   return (
     <div className="wrapper">
       <Header />
@@ -18,7 +29,7 @@ const App: FC = () => {
           </div>
           <h2 className="content__title">Все пиццы</h2>
           <div className="content__items">
-            {pizzas.map(item => (
+            {items.map(item => (
               <PizzaBlock key={item.id} {...item} />
             ))}
           </div>

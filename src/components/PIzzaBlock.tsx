@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 import { v1 } from 'uuid'
 
-interface Props {
+export interface Pizza {
   id: number
   imageUrl: string
   name: string
@@ -12,7 +12,7 @@ interface Props {
   rating: number
 }
 
-const PizzaBlock: FC<Props> = ({ name, price, imageUrl, sizes, types }) => {
+const PizzaBlock: FC<Pizza> = ({ name, price, imageUrl, sizes, types }) => {
   const typesName = ['тонкое', 'традиционное']
   const [activeSize, setActiveSize] = useState<number>(0)
   const [activeType, setActiveType] = useState<number>(0)
