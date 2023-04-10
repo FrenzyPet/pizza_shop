@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import './scss/app.scss'
+import { Route, Routes } from 'react-router-dom'
 import Header from './components/Header'
 import Basket from './pages/Basket'
 import Home from './pages/Home'
@@ -11,9 +12,11 @@ const App: FC = () => {
       <Header />
       <div className="content">
         <div className="container">
-          {/* <Home />
-          <Basket /> */}
-          <NotFound />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/basket" element={<Basket />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
         </div>
       </div>
     </div>
