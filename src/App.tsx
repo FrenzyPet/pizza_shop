@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import './scss/app.scss'
 import { Route, Routes } from 'react-router-dom'
 import Header from './components/Header'
@@ -7,13 +7,15 @@ import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 
 const App: FC = () => {
+  const [search, setSearch] = useState<string>('')
+
   return (
     <div className="wrapper">
-      <Header />
+      <Header search={search} setSearch={setSearch} />
       <div className="content">
         <div className="container">
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home search={search} />} />
             <Route path="/basket" element={<Basket />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

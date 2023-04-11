@@ -11,7 +11,11 @@ export interface Filter {
   sort: string
 }
 
-const Home: FC = () => {
+interface Props {
+  search: string
+}
+
+const Home: FC<Props> = ({ search }) => {
   const [items, setItems] = useState<Array<Pizza>>([])
   const [isLoading, setIsLoading] = useState(false)
   const [categoryIndex, setCategoryIndex] = useState<number>(0)
@@ -43,6 +47,12 @@ const Home: FC = () => {
     window.scrollTo(0, 0)
   }, [categoryIndex, activeSort])
 
+  const renderPizzas = items
+    .filter(item => item.name.toLowerCase().includes(search.toLowerCase()))
+    .map(item => <PizzaBlock key={item.id} {...item} />)
+
+  const renderSkeletons = tempItems.map(item => <PizzaBlockSkeleton key={item} />)
+
   return (
     <>
       <div className="content__top">
@@ -50,11 +60,7 @@ const Home: FC = () => {
         <Sort activeSort={activeSort} setActiveSort={setActiveSort} sortFilters={sortFilters} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">
-        {isLoading
-          ? tempItems.map(item => <PizzaBlockSkeleton key={item} />)
-          : items.map(item => <PizzaBlock key={item.id} {...item} />)}
-      </div>
+      <div className="content__items">{isLoading ? renderSkeletons : renderPizzas}</div>
     </>
   )
 }

@@ -3,7 +3,12 @@ import { Link } from 'react-router-dom'
 import pizzaLogo from '../assets/img/pizza-logo.svg'
 import Search from './Search/Search'
 
-const Header: FC = () => {
+interface Props {
+  search: string
+  setSearch: (text: string) => void
+}
+
+const Header: FC<Props> = ({ search, setSearch }) => {
   return (
     <div className="header">
       <div className="container">
@@ -16,7 +21,7 @@ const Header: FC = () => {
             </div>
           </div>
         </Link>
-        <Search />
+        <Search search={search} setSearch={setSearch} />
         <div className="header__cart">
           <Link to="/basket" className="button button--cart">
             <span>520 ₽</span>
