@@ -1,5 +1,6 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useContext, useEffect, useState } from 'react'
 import '../scss/app.scss'
+import { ContextType, SearchContext } from '../App'
 import Categories from '../components/Categories'
 import PizzaBlock from '../components/PizzaBlock'
 import { Pizza } from '../components/PizzaBlock'
@@ -11,11 +12,7 @@ export interface Filter {
   sort: string
 }
 
-interface Props {
-  search: string
-}
-
-const Home: FC<Props> = ({ search }) => {
+const Home: FC = () => {
   const [items, setItems] = useState<Array<Pizza>>([])
   const [isLoading, setIsLoading] = useState(false)
   const [categoryIndex, setCategoryIndex] = useState<number>(0)
@@ -25,6 +22,8 @@ const Home: FC<Props> = ({ search }) => {
     { name: 'цене', sort: 'price' },
     { name: 'алфавиту', sort: 'name' },
   ]
+
+  const { search } = useContext(SearchContext) as ContextType
 
   const tempItems = Array.from({ length: 12 }, (_, index) => index)
 
