@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { FC, useEffect, useState } from 'react'
 import '../scss/app.scss'
 import Categories from '../components/Categories'
@@ -25,14 +26,10 @@ const Home: FC = () => {
 
   const getPizza = () => {
     setIsLoading(true)
-    fetch(
-      `https://643347c6582420e2316206a7.mockapi.io/cosmopizza/api/items?${
-        categoryIndex ? `category=${categoryIndex}` : ''
-      }&sortBy=${sortFilters[activeSortId].sortValue}`
-    )
-      .then(response => response.json())
-      .then(data => {
-        setItems(data)
+    // prettier-ignore
+    axios.get(`https://643347c6582420e2316206a7.mockapi.io/cosmopizza/api/items?${categoryIndex ? `category=${categoryIndex}` : ''}&sortBy=${sortFilters[activeSortId].sortValue}`)
+      .then(response => {
+        setItems(response.data)
         setIsLoading(false)
       })
   }

@@ -1,4 +1,5 @@
-import { FC } from 'react'
+import debounce from 'lodash.debounce'
+import { ChangeEvent, FC, useCallback, useRef, useState } from 'react'
 import clearIcon from '../../assets/img/clear-icon.svg'
 import searchIcon from '../../assets/img/search-icon.svg'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
@@ -6,31 +7,40 @@ import { setSearchInput } from '../../redux/filter-slice'
 import style from './Search.module.scss'
 
 const Search: FC = () => {
+  const [localSearch, setLocalSearch] = useState<string>('')
   const search = useAppSelector(state => state.filter.searchInput)
   const dispatch = useAppDispatch()
+  const inputRef = useRef<HTMLInputElement>(null)
 
-  const onChangeSearch = (value: string) => {
-    dispatch(setSearchInput(value))
+  const onChangeSearch = (evt: ChangeEvent<HTMLInputElement>) => {
+    setLocalSearch(evt.currentTarget.value)
+    updateSearchValue(evt.currentTarget.value)
+  }
+
+  const updateSearchValue = useCallback(
+    debounce(value => dispatch(setSearchInput(value)), 350),
+    []
+  )
+
+  const clearButtonHandler = () => {
+    setLocalSearch('')
+    dispatch(setSearchInput(''))
+    inputRef.current?.focus()
   }
 
   return (
     <div className={style.root}>
       <img className={style.icon} src={searchIcon} alt="" />
       <input
-        onChange={evt => onChangeSearch(evt.currentTarget.value)}
-        value={search}
+        ref={inputRef}
+        onChange={onChangeSearch}
+        value={localSearch}
         className={style.input}
         type="text"
         placeholder="Найти питцу..."
       />
-
       {search && (
-        <img
-          onClick={() => onChangeSearch('')}
-          className={style.clearIcon}
-          src={clearIcon}
-          alt=""
-        />
+        <img onClick={clearButtonHandler} className={style.clearIcon} src={clearIcon} alt="" />
       )}
     </div>
   )
