@@ -1,17 +1,17 @@
 import { FC, useEffect, useState } from 'react'
-import { Filter } from '../pages/Home'
-
+import { useAppDispatch } from '../hooks/hooks'
+import { SortType, setActiveSortId } from '../redux/filter-slice'
 interface Props {
-  activeSort: number
-  setActiveSort: (sortType: number) => void
-  sortFilters: Array<Filter>
+  activeSortId: number
+  sortFilters: Array<SortType>
 }
 
-const Sort: FC<Props> = ({ activeSort, setActiveSort, sortFilters }) => {
+const Sort: FC<Props> = ({ activeSortId, sortFilters }) => {
   const [isPopup, setIsPopup] = useState(false)
+  const dispatch = useAppDispatch()
 
-  const onSortClick = (sortType: number) => {
-    setActiveSort(sortType)
+  const onSortClick = (sortId: number) => {
+    dispatch(setActiveSortId(sortId))
     setIsPopup(false)
   }
 
@@ -49,17 +49,17 @@ const Sort: FC<Props> = ({ activeSort, setActiveSort, sortFilters }) => {
             setIsPopup(!isPopup)
           }}
         >
-          {sortFilters[activeSort].name}
+          {sortFilters[activeSortId].name}
         </div>
       </div>
       {isPopup && (
         <div className="sort__popup">
           <ul>
-            {sortFilters.map((item, index) => (
+            {sortFilters.map(item => (
               <li
-                key={index}
-                onClick={() => onSortClick(index)}
-                className={activeSort === index ? 'active' : ''}
+                key={item.id}
+                onClick={() => onSortClick(item.id)}
+                className={activeSortId === item.id ? 'active' : ''}
               >
                 {item.name}
               </li>
