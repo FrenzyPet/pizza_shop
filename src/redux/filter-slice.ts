@@ -14,6 +14,11 @@ export interface FilterSlice {
   searchInput: string
 }
 
+interface Params {
+  categoryId: number
+  sortId: number
+}
+
 const initialState: FilterSlice = {
   categoryId: 0,
   sortFilters: [
@@ -50,9 +55,13 @@ export const filterSlice = createSlice({
     setActiveSortId: (state, action: PayloadAction<number>) => {
       state.activeSortId = action.payload
     },
+    setParamsToFilter: (state, action: PayloadAction<Params>) => {
+      state.activeSortId = action.payload.sortId
+      state.categoryId = action.payload.categoryId
+    },
   },
 })
 
-export const { setCategoryId, setSearchInput, setActiveSortId } = filterSlice.actions
+export const { setCategoryId, setSearchInput, setActiveSortId, setParamsToFilter } = filterSlice.actions
 
 export default filterSlice.reducer
