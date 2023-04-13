@@ -26,7 +26,7 @@ const BasketItem: FC<PizzaItem> = ({ imageUrl, name, price, size, type, model, c
     if (count > 1) {
       dispatch(decreasePizzaAmount(model))
     } else {
-      dispatch(removePizza(model))
+      setShowRemovePizzaModal(true)
     }
   }
   return (

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import ModalWindow from '../components/ModalWindow/ModalWindow'
 import { useAppDispatch, useAppSelector } from '../hooks/hooks'
 import { clearBasket } from '../redux/basket-slice'
+import BasketEmpty from './BasketEmpty'
 import BasketItem from './BasketItem'
 
 const Basket: FC = () => {
@@ -19,6 +20,10 @@ const Basket: FC = () => {
   const finalClearButtonHandler = () => {
     dispatch(clearBasket())
     setShowClearBasketModal(false)
+  }
+
+  if (items.length === 0) {
+    return <BasketEmpty />
   }
 
   return (

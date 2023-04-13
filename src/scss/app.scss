@@ -275,12 +275,13 @@ body {
 
   &--empty {
     margin: 0 auto;
-    width: 560px;
+    padding: 60px;
+    width: auto;
     text-align: center;
 
     h2 {
       font-size: 32px;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
 
     p {
