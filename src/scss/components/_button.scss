@@ -5,7 +5,7 @@
   background-color: $orange;
   border-radius: 30px;
   padding: 10px 20px;
-  min-width: 100px;
+  min-width: 160px;
   text-align: center;
   cursor: pointer;
   transition: background-color $duration ease-in-out, border-color $duration ease-in-out;
@@ -97,7 +97,7 @@
 
   &--add {
     svg {
-      margin-right: 2px;
+      margin-right: 5px;
     }
 
     span {
