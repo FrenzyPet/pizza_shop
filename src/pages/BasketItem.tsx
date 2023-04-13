@@ -1,14 +1,20 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
+import ModalWindow from '../components/ModalWindow/ModalWindow'
 import { useAppDispatch } from '../hooks/hooks'
 import { PizzaItem, decreasePizzaAmount, increasePizzaAmount, removePizza } from '../redux/basket-slice'
 
 const BasketItem: FC<PizzaItem> = ({ imageUrl, name, price, size, type, model, count }) => {
   const typesName = ['тонкое', 'традиционное']
   const pizzaSizes = [26, 30, 40]
+  const [showRemovePizzaModal, setShowRemovePizzaModal] = useState(false)
 
   const dispatch = useAppDispatch()
 
   const removeButtonHandler = () => {
+    setShowRemovePizzaModal(true)
+  }
+  const finalRemoveButtonHandler = () => {
+    setShowRemovePizzaModal(false)
     dispatch(removePizza(model))
   }
 
@@ -45,6 +51,14 @@ const BasketItem: FC<PizzaItem> = ({ imageUrl, name, price, size, type, model, c
       <div className="cart__item-remove">
         <DeleteButton handler={removeButtonHandler} />
       </div>
+      <ModalWindow active={showRemovePizzaModal} setActive={setShowRemovePizzaModal}>
+        <div>
+          <p>Вы точно хотите удалить пиццу?</p>
+          <button className="button" onClick={finalRemoveButtonHandler}>
+            Удалить
+          </button>
+        </div>
+      </ModalWindow>
     </div>
   )
 }

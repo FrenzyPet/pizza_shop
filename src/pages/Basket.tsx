@@ -1,5 +1,6 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
+import ModalWindow from '../components/ModalWindow/ModalWindow'
 import { useAppDispatch, useAppSelector } from '../hooks/hooks'
 import { clearBasket } from '../redux/basket-slice'
 import BasketItem from './BasketItem'
@@ -7,11 +8,17 @@ import BasketItem from './BasketItem'
 const Basket: FC = () => {
   const { items, totalPrice } = useAppSelector(state => state.basket)
   const dispatch = useAppDispatch()
+  const [showClearBasketModal, setShowClearBasketModal] = useState(false)
 
   const totalCount = items.reduce((acc, item) => acc + item.count, 0)
 
   const clearButtonHandler = () => {
+    setShowClearBasketModal(true)
+  }
+
+  const finalClearButtonHandler = () => {
     dispatch(clearBasket())
+    setShowClearBasketModal(false)
   }
 
   return (
@@ -87,6 +94,14 @@ const Basket: FC = () => {
           </div>
         </div>
       </div>
+      <ModalWindow active={showClearBasketModal} setActive={setShowClearBasketModal}>
+        <div>
+          <p>Вы точно хотите очистить корзину?</p>
+          <button className="button" onClick={finalClearButtonHandler}>
+            Очистить
+          </button>
+        </div>
+      </ModalWindow>
     </div>
   )
 }
