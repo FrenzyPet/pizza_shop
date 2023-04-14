@@ -2,17 +2,7 @@ import { FC, useState } from 'react'
 import { v1 } from 'uuid'
 import { useAppDispatch, useAppSelector } from '../hooks/hooks'
 import { addPizza } from '../redux/basket-slice'
-
-export interface Pizza {
-  id: number
-  imageUrl: string
-  name: string
-  types: Array<number>
-  sizes: Array<number>
-  price: number
-  category: number
-  rating: number
-}
+import type { Pizza } from '../redux/pizza-slice'
 
 const PizzaBlock: FC<Pizza> = ({ id, name, price, imageUrl, sizes, types }) => {
   const typesName = ['тонкое', 'традиционное']

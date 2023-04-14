@@ -74,7 +74,7 @@ const Basket: FC = () => {
         </div>
         <div className="content__items">
           {items.map(item => (
-            <BasketItem {...item} />
+            <BasketItem key={item.id} {...item} />
           ))}
         </div>
         <div className="cart__bottom">

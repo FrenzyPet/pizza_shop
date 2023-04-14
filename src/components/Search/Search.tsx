@@ -31,17 +31,8 @@ const Search: FC = () => {
   return (
     <div className={style.root}>
       <img className={style.icon} src={searchIcon} alt="" />
-      <input
-        ref={inputRef}
-        onChange={onChangeSearch}
-        value={localSearch}
-        className={style.input}
-        type="text"
-        placeholder="Найти питцу..."
-      />
-      {search && (
-        <img onClick={clearButtonHandler} className={style.clearIcon} src={clearIcon} alt="" />
-      )}
+      <input ref={inputRef} onChange={onChangeSearch} value={localSearch} className={style.input} type="text" placeholder="Найти питсу..." />
+      {search && <img onClick={clearButtonHandler} className={style.clearIcon} src={clearIcon} alt="" />}
     </div>
   )
 }

@@ -1,47 +1,21 @@
-import axios from 'axios'
 import qs from 'qs'
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../scss/app.scss'
 import Categories from '../components/Categories'
 import PizzaBlock from '../components/PizzaBlock'
-import { Pizza } from '../components/PizzaBlock'
 import PizzaBlockSkeleton from '../components/PizzaBlockSkeleton'
 import Sort from '../components/Sort'
 import { useAppDispatch, useAppSelector } from '../hooks/hooks'
 import { setParamsToFilter } from '../redux/filter-slice'
-
-export interface Filter {
-  name: string
-  sort: string
-}
+import { StatusValues, fetchPizzas } from '../redux/pizza-slice'
+import HomeError from './HomeError'
 
 const Home: FC = () => {
-  const categoryIndex = useAppSelector(state => state.filter.categoryId)
-  const search = useAppSelector(state => state.filter.searchInput)
-  const activeSortId = useAppSelector(state => state.filter.activeSortId)
-  const sortFilters = useAppSelector(state => state.filter.sortFilters)
+  const { categoryId, searchInput, activeSortId, sortFilters } = useAppSelector(state => state.filter)
+  const { items, fetchStatus } = useAppSelector(state => state.pizza)
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-
-  const [items, setItems] = useState<Array<Pizza>>([])
-  const [isLoading, setIsLoading] = useState(false)
-
-  const mockItems = Array.from({ length: 8 }, (_, index) => index)
-
-  const getPizza = () => {
-    setIsLoading(true)
-    axios
-      .get(
-        `https://643347c6582420e2316206a7.mockapi.io/cosmopizza/api/items?${categoryIndex ? `category=${categoryIndex}` : ''}&sortBy=${
-          sortFilters[activeSortId].sortValue
-        }`
-      )
-      .then(response => {
-        setItems(response.data)
-        setIsLoading(false)
-      })
-  }
 
   useEffect(() => {
     if (window.location.search) {
@@ -62,32 +36,33 @@ const Home: FC = () => {
   }, [dispatch, sortFilters])
 
   useEffect(() => {
-    getPizza()
+    dispatch(fetchPizzas({ categoryId, activeSortId, sortFilters }))
     window.scrollTo(0, 0)
-  }, [categoryIndex, activeSortId])
+  }, [dispatch, categoryId, activeSortId, sortFilters])
 
   useEffect(() => {
     const queryParams = qs.stringify({
-      category: categoryIndex,
+      category: categoryId,
       sortBy: sortFilters[activeSortId].sortValue,
     })
     navigate(`?${queryParams}`)
-  }, [categoryIndex, activeSortId, sortFilters, navigate])
+  }, [categoryId, activeSortId, sortFilters, navigate])
 
-  const renderPizzas = items
-    .filter(item => item.name.toLowerCase().includes(search.toLowerCase()))
-    .map(item => <PizzaBlock key={item.id} {...item} />)
-
+  const mockItems = Array.from({ length: 8 }, (_, index) => index)
   const renderSkeletons = mockItems.map(item => <PizzaBlockSkeleton key={item} />)
+  const renderPizzas = items
+    .filter(item => item.name.toLowerCase().includes(searchInput.toLowerCase()))
+    .map(item => <PizzaBlock key={item.id} {...item} />)
 
   return (
     <>
       <div className="content__top">
-        <Categories categoryIndex={categoryIndex} />
+        <Categories categoryIndex={categoryId} />
         <Sort activeSortId={activeSortId} sortFilters={sortFilters} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">{isLoading ? renderSkeletons : renderPizzas}</div>
+      {fetchStatus === StatusValues.error && <HomeError />}
+      <div className="content__items">{fetchStatus === StatusValues.loading ? renderSkeletons : renderPizzas}</div>
     </>
   )
 }
