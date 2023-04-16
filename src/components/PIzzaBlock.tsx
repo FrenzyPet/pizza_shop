@@ -1,4 +1,5 @@
 import { FC, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { v1 } from 'uuid'
 import { useAppDispatch, useAppSelector } from '../hooks/hooks'
 import { addPizza } from '../redux/basket-slice'
@@ -37,7 +38,9 @@ const PizzaBlock: FC<Pizza> = ({ id, name, price, imageUrl, sizes, types }) => {
   }
   return (
     <div className="pizza-block">
-      <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+      <Link to={`/pizza/${id}`}>
+        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+      </Link>
       <h4 className="pizza-block__title">{name}</h4>
       <div className="pizza-block__selector">
         <ul>
