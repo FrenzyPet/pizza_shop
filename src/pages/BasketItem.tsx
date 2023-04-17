@@ -62,6 +62,9 @@ const BasketItem: FC<PizzaItem> = ({ imageUrl, name, price, size, type, model, c
     </div>
   )
 }
+interface ButtonProps {
+  handler: () => void
+}
 
 const IncrementButton: FC<ButtonProps> = ({ handler }) => {
   return (
@@ -95,10 +98,6 @@ const DecrementButton: FC<ButtonProps> = ({ handler }) => {
       </svg>
     </button>
   )
-}
-
-interface ButtonProps {
-  handler: () => void
 }
 
 const DeleteButton: FC<ButtonProps> = ({ handler }) => {

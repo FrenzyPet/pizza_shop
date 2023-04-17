@@ -17,6 +17,7 @@ const Search: FC = () => {
     updateSearchValue(evt.currentTarget.value)
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const updateSearchValue = useCallback(
     debounce(value => dispatch(setSearchInput(value)), 350),
     []

@@ -44,7 +44,7 @@ export const fetchPizzas = createAsyncThunk<Array<Pizza>, Attributes>(
         sortFilters[activeSortId].sortValue
       }`
     )
-    return data as Array<Pizza>
+    return data
   }
 )
 

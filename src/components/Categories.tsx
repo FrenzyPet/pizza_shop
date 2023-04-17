@@ -2,7 +2,6 @@ import { FC } from 'react'
 import { v1 } from 'uuid'
 import { useAppDispatch } from '../hooks/hooks'
 import { setCategoryId } from '../redux/filter-slice'
-
 interface Props {
   categoryIndex: number
 }
@@ -19,11 +18,7 @@ const Categories: FC<Props> = ({ categoryIndex }) => {
     <div className="categories">
       <ul>
         {categories.map((item, index) => (
-          <li
-            key={v1()}
-            onClick={() => onChangeCategory(index)}
-            className={categoryIndex === index ? 'active' : ''}
-          >
+          <li key={v1()} onClick={() => onChangeCategory(index)} className={categoryIndex === index ? 'active' : ''}>
             {item}
           </li>
         ))}

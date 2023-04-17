@@ -10,8 +10,8 @@ interface Props {
 
 const ModalWindow: FC<Props> = ({ active, setActive, children }) => {
   useEffect(() => {
-    const closeModal = (evt: any) => {
-      if (evt.keyCode === 27) {
+    const closeModal = (evt: KeyboardEvent) => {
+      if (evt.code === 'Escape') {
         setActive(false)
       }
     }
