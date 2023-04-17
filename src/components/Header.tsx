@@ -1,14 +1,29 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import pizzaLogo from '../assets/img/pizza-logo.svg'
-import { useAppSelector } from '../hooks/hooks'
+import { useAppDispatch, useAppSelector } from '../hooks/hooks'
+import { setBasketFromLS } from '../redux/basket-slice'
 import Search from './Search/Search'
 
 const Header: FC = () => {
   const { items, totalPrice } = useAppSelector(state => state.basket)
   const location = useLocation()
+  const dispatch = useAppDispatch()
 
   const totalCount = items.reduce((acc, item) => item.count + acc, 0)
+
+  useEffect(() => {
+    const jsonBasket = localStorage.getItem('basket')
+    if (jsonBasket) {
+      const basketItems = JSON.parse(jsonBasket)
+      dispatch(setBasketFromLS(basketItems))
+    }
+  }, [dispatch])
+
+  useEffect(() => {
+    const jsonBasket = JSON.stringify(items)
+    localStorage.setItem('basket', jsonBasket)
+  }, [items])
 
   return (
     <div className="header">

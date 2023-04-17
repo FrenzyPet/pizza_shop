@@ -30,6 +30,10 @@ export const basketSlice = createSlice({
       state.items = []
       state.totalPrice = 0
     },
+    setBasketFromLS: (state, action: PayloadAction<Array<PizzaItem>>) => {
+      state.items = action.payload
+      state.totalPrice = state.items.reduce((acc, item) => acc + item.price * item.count, 0)
+    },
     addPizza: (state, action: PayloadAction<PizzaItem>) => {
       const samePizza = state.items.find(item => item.model === action.payload.model)
       if (samePizza) {
@@ -61,6 +65,6 @@ export const basketSlice = createSlice({
   },
 })
 
-export const { clearBasket, addPizza, removePizza, increasePizzaAmount, decreasePizzaAmount } = basketSlice.actions
+export const { clearBasket, addPizza, removePizza, increasePizzaAmount, decreasePizzaAmount, setBasketFromLS } = basketSlice.actions
 
 export default basketSlice.reducer
