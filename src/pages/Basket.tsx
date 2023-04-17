@@ -10,6 +10,7 @@ const Basket: FC = () => {
   const { items, totalPrice } = useAppSelector(state => state.basket)
   const dispatch = useAppDispatch()
   const [showClearBasketModal, setShowClearBasketModal] = useState(false)
+  const [showPayModal, setShowPayModal] = useState(false)
 
   const totalCount = items.reduce((acc, item) => acc + item.count, 0)
 
@@ -20,6 +21,16 @@ const Basket: FC = () => {
   const finalClearButtonHandler = () => {
     dispatch(clearBasket())
     setShowClearBasketModal(false)
+  }
+
+  const payButtonHandler = () => {
+    setShowPayModal(true)
+  }
+
+  const finalPayButtonHandler = () => {
+    dispatch(clearBasket())
+    localStorage.removeItem('basket')
+    setShowPayModal(false)
   }
 
   if (items.length === 0) {
@@ -93,9 +104,9 @@ const Basket: FC = () => {
               </svg>
               <span>Вернуться назад</span>
             </Link>
-            <div className="button pay-btn">
+            <button onClick={payButtonHandler} className="button pay-btn">
               <span>Оплатить сейчас</span>
-            </div>
+            </button>
           </div>
         </div>
       </div>
@@ -104,6 +115,14 @@ const Basket: FC = () => {
           <p>Вы точно хотите очистить корзину?</p>
           <button className="button" onClick={finalClearButtonHandler}>
             Очистить
+          </button>
+        </div>
+      </ModalWindow>
+      <ModalWindow active={showPayModal} setActive={setShowPayModal}>
+        <div>
+          <p>Оплатить заказ?</p>
+          <button className="button" onClick={finalPayButtonHandler}>
+            Оплатить
           </button>
         </div>
       </ModalWindow>
