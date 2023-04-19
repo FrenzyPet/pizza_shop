@@ -1,10 +1,10 @@
 import { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
+import BasketItem from '../components/BasketItem'
 import ModalWindow from '../components/ModalWindow/ModalWindow'
 import { useAppDispatch, useAppSelector } from '../hooks/hooks'
 import { clearBasket } from '../redux/basket-slice'
 import BasketEmpty from './BasketEmpty'
-import BasketItem from './BasketItem'
 
 const Basket: FC = () => {
   const { items, totalPrice } = useAppSelector(state => state.basket)

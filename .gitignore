@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 /OLD_VERSION
+pizzaList.json
 
 # testing
 /coverage

@@ -3,13 +3,13 @@ import { FC, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../scss/app.scss'
 import Categories from '../components/Categories'
+import HomeError from '../components/HomeError'
 import PizzaBlock from '../components/PizzaBlock'
 import PizzaBlockSkeleton from '../components/PizzaBlockSkeleton'
 import Sort from '../components/Sort'
 import { useAppDispatch, useAppSelector } from '../hooks/hooks'
 import { setParamsToFilter } from '../redux/filter-slice'
 import { StatusValues, fetchPizzas } from '../redux/pizza-slice'
-import HomeError from './HomeError'
 
 const Home: FC = () => {
   const { categoryId, searchInput, activeSortId, sortFilters } = useAppSelector(state => state.filter)
